@@ -23,11 +23,7 @@ use App\Http\Controllers\Api\OrderController;
 Route::controller(AuthController::class)->group(function() {
     Route::post('/tokens/create', 'createToken');
 });
-Route::controller(UserController::class)->group(function() {
-    Route::get('/users', 'index');
-    Route::get('/users/{id}', 'show');
-    Route::get('/users/search/{name}', 'search');
-});
+
 Route::controller(ProductController::class)->group(function() {
     Route::get('/products', 'index');
     Route::get('/products/{id}', 'show');
@@ -44,6 +40,9 @@ Route::middleware('auth:sanctum')->group( function () {
     Route::post('/logout', [LoginRegisterController::class, 'logout']);
 
     Route::controller(UserController::class)->group(function() {
+        Route::get('/users', 'index');
+        Route::get('/users/{id}', 'show');
+        Route::get('/users/search/{name}', 'search');
         Route::post('/users', 'store');
         Route::post('/users/{id}', 'update');
         Route::delete('/users/{id}', 'destroy');
