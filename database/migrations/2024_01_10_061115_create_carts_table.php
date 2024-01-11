@@ -15,7 +15,8 @@ return new class extends Migration
             $table->ulid('id')->primary();
             $table->json('products')->nullable();
             $table->decimal('total_cart', $precision = 8, $scale = 2);
-            $table->string('abandoned_cart');
+            $table->boolean('abandoned_cart');
+            $table->boolean('sale');
             $table->timestamps();
         });
     }

@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\OrderController;
 
 
 /*
@@ -31,8 +33,21 @@ Route::controller(ProductController::class)->group(function() {
     Route::get('/products/{id}', 'show');
     Route::get('/products/search/{name}', 'search');
 });
+Route::controller(CartController::class)->group(function() {
+    Route::get('/carts/{id}', 'show');
+});
+Route::controller(OrderController::class)->group(function() {
+    Route::get('/orders', 'index');
+    Route::get('/orders/{id}', 'show');
+});
 Route::middleware('auth:sanctum')->group( function () {
     Route::post('/logout', [LoginRegisterController::class, 'logout']);
+
+    Route::controller(UserController::class)->group(function() {
+        Route::post('/users', 'store');
+        Route::post('/users/{id}', 'update');
+        Route::delete('/users/{id}', 'destroy');
+    });
 
     Route::controller(ProductController::class)->group(function() {
         Route::post('/products', 'store');
@@ -40,9 +55,14 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::delete('/products/{id}', 'destroy');
     });
 
-    Route::controller(UserController::class)->group(function() {
-        Route::post('/users', 'store');
-        Route::post('/users/{id}', 'update');
-        Route::delete('/users/{id}', 'destroy');
+    Route::controller(CartController::class)->group(function() {
+        Route::post('/carts', 'store');
     });
+
+    Route::controller(OrderController::class)->group(function() {
+        Route::post('/orders', 'store');
+    });
+
+
+    
 });
