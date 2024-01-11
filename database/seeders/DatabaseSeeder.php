@@ -12,11 +12,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call(RoleSeeder::class);
+        $this->call(UserSeeder::class);
+        /*Creation list of Devices Models*/
+        $categories = [
+            "Electrónicos",
+            "Ropa",
+            "Calzado",
+            "Línea Blanca",
+        ];
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        foreach($categories as $c){
+            \App\Models\Category::create([
+                'name' => $c,
+            ]);
+        } 
     }
 }
